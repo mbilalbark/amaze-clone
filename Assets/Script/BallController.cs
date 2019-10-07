@@ -74,17 +74,17 @@ public class BallController : MonoBehaviour
 
     private string returnDirection(RaycastHit hit)
     { 
-    HitDirection hitDirection = HitDirection.None;
+        HitDirection hitDirection = HitDirection.None;
 
-    Vector3 MyNormal = hit.normal;
-    MyNormal = hit.transform.TransformDirection(MyNormal);
+        Vector3 MyNormal = hit.normal;
+        MyNormal = hit.transform.TransformDirection(MyNormal);
 
-    if (MyNormal == hit.transform.forward) { hitDirection = HitDirection.Forward; }
-    if (MyNormal == -hit.transform.forward) { hitDirection = HitDirection.Back; }
-    if (MyNormal == hit.transform.right) { hitDirection = HitDirection.Right; }
-    if (MyNormal == -hit.transform.right) { hitDirection = HitDirection.Left; }
+        if (MyNormal == hit.transform.forward) { hitDirection = HitDirection.Forward; }
+        if (MyNormal == -hit.transform.forward) { hitDirection = HitDirection.Back; }
+        if (MyNormal == hit.transform.right) { hitDirection = HitDirection.Right; }
+        if (MyNormal == -hit.transform.right) { hitDirection = HitDirection.Left; }
 
-    return hitDirection.ToString();
+        return hitDirection.ToString();
     }
 
     private void FixedUpdate()
