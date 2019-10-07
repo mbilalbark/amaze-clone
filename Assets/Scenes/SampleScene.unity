@@ -572,7 +572,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 298489041}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 716627514}
+        m_MethodName: tryAgain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &298489041
@@ -1216,7 +1227,7 @@ MonoBehaviour:
   floor: {fileID: 946471829}
   _level: {fileID: 124965451}
   _limitedCounter: {fileID: 1778343369}
-  _tryButton: {fileID: 1936447550}
+  _nextGame: {fileID: 1936447550}
   _pausePage: {fileID: 1945025808}
   _gameModePage: {fileID: 394453751}
   _gameOverPage: {fileID: 1971874576}
@@ -1246,6 +1257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faddd87711228e743809e31f6acd88d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  limitedValue: 00000000000000000d000000
 --- !u!1 &722669622
 GameObject:
   m_ObjectHideFlags: 0
@@ -2379,7 +2391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1778343368
 RectTransform:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
         [SerializeField] private Transform maze, floor;
 
         public Text _level,_limitedCounter;
-        public Button _tryButton;
+        public Button _nextGame;
         public GameObject _pausePage, _gameModePage, _gameOverPage;
         private BallController ballController;
         private float time;
@@ -37,10 +37,12 @@ public class GameController : MonoBehaviour
 
         private void createMap(int[,,] mapArray, int level)
         {
-            
+            if (level > 2)
+                level = 0;
+            levelPassCounter = 0;
+          
             ball.transform.localPosition = 
                     new Vector3(map.ballPosition[level, 0], map.ballPosition[level, 1], map.ballPosition[level, 2]);
-            
             int childCount = 0;
             for (int i = 0; i < 13; i++)
             {
@@ -61,7 +63,8 @@ public class GameController : MonoBehaviour
                     childCount++;
                 }
             }
-        }
+            ballController.ColoredWallCounter = 0;
+    }
 
         #region Ui Control Functions
         public void gameModeOpenPage()
@@ -80,22 +83,34 @@ public class GameController : MonoBehaviour
             ballController.MoveCounter = 0;
         }
 
+        public void tryAgain()
+        {
+            _gameOverPage.SetActive(false);
+           
+            createMap(map.maze, level);
+        } 
+
         public void gamaModeSelect(int mode)
         {
             if (mode == 1)
             {
                 // ToDo: PlayerPrefs save game
                 level = 2;
-                limitedValue = map.limitedValu[2];
+                limitedValue = map.limitedValue[level];
                 limitedGame = true;
-                _limitedCounter.text = limitedValue.ToString();
+                ballController.MoveCounter = 0;
+                uiLevel = level + 1;
+                _level.text = "Level" + 1;
                 _limitedCounter.gameObject.SetActive(true);
             }
             else
             {
-                limitedGame = true;
+                // ToDo saved game
+                level = 0;
+                limitedGame = false;
                 _limitedCounter.gameObject.SetActive(false);
             }
+            levelPassCounter = 0;
             createMap(map.maze, level);
             _gameModePage.SetActive(false);
         }
@@ -109,30 +124,34 @@ public class GameController : MonoBehaviour
         {
             _pausePage.SetActive(false);
         }
-        #endregion
+
+        private void levelPass()
+        {
+            if (level > 1)
+            {
+                level = -1;
+                limitedGame = false;
+                _limitedCounter.gameObject.SetActive(false);
+            }
+            level++;
+            _nextGame.gameObject.SetActive(false);
+            uiLevel = level + 1;
+            _level.text = "Level " + uiLevel;
+            createMap(map.maze, level);
+        }
+    #endregion
 
         private void levelFinished()
         {
             // ToDo Add Particular Effect
             // Zemin hareket ettirilecek
             _level.text = level+1 + ". SEVİYE TAMAMLANDI";
-            _tryButton.gameObject.SetActive(true);
-            ballController.ColoredWallCounter = 0;
-        }
-
-        private void levelPass()
-        {
-            level++;
-            _tryButton.gameObject.SetActive(false);
-            uiLevel = level + 1;
-            _level.text = "Level " + uiLevel;
-            levelPassCounter = 0;
-            createMap(map.maze,level);
+            _nextGame.gameObject.SetActive(true);
         }
 
         private void Update()
         {
-            _limitedCounter.text = ballController.MoveCounter.ToString();
+            _limitedCounter.text = (limitedValue-ballController.MoveCounter).ToString();
             if (ballController.ColoredWallCounter == levelPassCounter)
             {
                 levelFinished();
